@@ -26,7 +26,7 @@ class User(UserBase):
     id: int
 
     class Config:
-        from_attributes = True  # Замена orm_mode=True для Pydantic v2
+        from_attributes = True
 
 
 
