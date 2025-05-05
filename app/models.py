@@ -19,7 +19,7 @@ class Book(Base):
     year = Column(Integer)
     genre_id = Column(Integer, ForeignKey("genres.id"))
 
-    # Убедитесь, что есть соответствующая модель Genre
+
     genre = relationship("Genre", back_populates="books")
 
 

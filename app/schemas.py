@@ -2,17 +2,17 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-# Модели для аутентификации
+
 class Token(BaseModel):
     access_token: str
     token_type: str
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None  # Именно этот класс отсутствовал
+    username: Optional[str] = None
 
 
-# Модели пользователей
+
 class UserBase(BaseModel):
     username: str
     email: str
@@ -29,7 +29,7 @@ class User(UserBase):
         from_attributes = True  # Замена orm_mode=True для Pydantic v2
 
 
-# Модели книг
+
 class BookBase(BaseModel):
     title: str
     author: str

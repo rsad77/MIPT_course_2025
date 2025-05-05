@@ -7,6 +7,9 @@ from app.database import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to Book Catalog API"}
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -15,7 +18,6 @@ def get_db():
     finally:
         db.close()
 
-# Регистрация (POST)
 @app.post("/register/", response_model=schemas.User, status_code=status.HTTP_201_CREATED)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_username(db, username=user.username)
@@ -26,7 +28,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
         )
     return crud.create_user(db=db, user=user)
 
-# Аутентификация (POST)
+
 @app.post("/token", response_model=schemas.Token)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
@@ -41,7 +43,7 @@ def login(
     access_token = auth.create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}
 
-# Работа с книгами
+
 @app.post("/books/", response_model=schemas.Book)
 def create_book(
     book: schemas.BookCreate,
